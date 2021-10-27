@@ -6,8 +6,25 @@ if(isset($_GET['id'])&&ctype_digit($_GET['id'])&&!empty($_GET['id'])){
     $idarticle = (int) $_GET['id'];
 
     // requête
-    $sql="";
+    $sql="SELECT a.idthearticle, a.thearticletitle, a.thearticletext, a.thearticledate,
+    u.idtheuser, u.theuserlogin
+FROM thearticle a
+INNER JOIN  theuser u 
+ON u.idtheuser = a.theuser_idtheuser
+WHERE a.idthearticle = $idarticle;";
+$request= mysqli_query($db,$sql) or die("erreur de select:".
+mysqli_error($db));
+if (mysqli_num_rows($request)){
+    $result= mysqli_fetch_assoc($request);
+    var_dump($result);
 
+}
+else{
+    header("location: ./?page=erreur404");
+    exit;
+    
+
+}
 
 // pas de variable id    
 }else{
